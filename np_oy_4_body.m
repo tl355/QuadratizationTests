@@ -50,4 +50,4 @@ H_4_body = sparse(-A*(z_111*z_112*z_113*z_114 + z_014*z_111 + z_112*z_103 + z_11
     + (t/2)*((x_a112 + z_a111*x_a112)*x_113*x_114 + (x_a111*x_a112 + y_a111*y_a112)*x_122*x_124 ...
     + (x_a112 - z_a111*x_a112)*x_221*x_222 + (x_a111*x_a112 - y_a111*y_a112)*x_211*x_213 ));
 
-abs(min(eig(H_8_body))-min(eig(H_4_body)))
+abs(eigs(H_8_body, 1, 'smallestreal')-eigs(H_4_body, 1, 'smallestreal'))
