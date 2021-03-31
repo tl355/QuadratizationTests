@@ -1,2 +1,2 @@
 # QuadratizationTests
-For testing very large quadrarizations.
+For testing quadratizations.
