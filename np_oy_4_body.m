@@ -1,6 +1,5 @@
 x = [0 1 ; 1 0]; y = [0 -1i ; 1i 0]; z = [1 0 ; 0 -1];
 
-J = 1;
 x_113  = sparse(kron(kron(speye(2^0),x),speye(2^17)));
 z_113  = sparse(kron(kron(speye(2^0),z),speye(2^17)));
 
@@ -55,15 +54,15 @@ z_a122 = sparse(kron(kron(speye(2^17),z),speye(2^0)));
 
 I = speye(2^18);
 
-U = 1; t = 1;
+U = 0.005; t = 0.375*U; J = 0.09*U;
 
-H_8_body = sparse(-J*(x_113*x_122*x_114*x_124*x_211*x_221*x_213*x_222 + z_111*z_112*z_113*z_114 + z_014*z_111 + z_112*z_103 + z_114*z_211 + z_113*z_122));
+LHS = sparse(-J*(x_113*x_122*x_114*x_124*x_211*x_221*x_213*x_222 + z_111*z_112*z_113*z_114 + z_014*z_111 + z_112*z_103 + z_114*z_211 + z_113*z_122));
 
-H_4_body = sparse(J*(-z_111*z_112*z_113*z_114 - z_014*z_111 + z_112*z_103 + z_114*z_211 + z_113*z_122 ...
+RHS = sparse(J*(-z_111*z_112*z_113*z_114 - z_014*z_111 - z_112*z_103 - z_114*z_211 - z_113*z_122 ...
     + (I - z_a111 + z_a112 + z_a111*z_a112) * (z_a121 + z_a122 + z_a121*z_a122 - I) ...
     + (I + z_a111 - z_a112 + z_a111*z_a112) * (I - z_a211 - z_a212 - z_a211*z_a212)) ...
     - (U/2)*(z_a111 + z_a112 + z_a111*z_a112 - I) ...
     - (t/2)*((x_a112 + z_a111*x_a112)*x_113*x_114 + (x_a111*x_a112 + y_a111*y_a112)*x_122*x_124 ...
     + (x_a112 - z_a111*x_a112)*x_221*x_222 + (x_a111*x_a112 - y_a111*y_a112)*x_211*x_213 ));
 
-abs(eigs(H_8_body, 1, 'smallestreal')-eigs(H_4_body, 1, 'smallestreal'))
+abs(eigs(LHS, 1, 'smallestreal')-eigs(RHS, 1, 'smallestreal'))
