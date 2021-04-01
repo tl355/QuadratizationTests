@@ -70,10 +70,21 @@ lam_5a10 = kron(kron(speye(3^5),gm5),speye(3^0));
 lam_6a10 = kron(kron(speye(3^5),gm6),speye(3^0));
 
 LHS = (1/4)*(kron(x1*x2,eye(3^6)) + kron(y1*y2,eye(3^6)) + kron(x1*x2*z3,eye(3^6)) + kron(x1*x2*x4,eye(3^6)) + kron(y1*y2*z3,eye(3^6)) + kron(y1*y2*x4,eye(3^6)) - kron(x1*x2*z3*x4,eye(3^6)) - kron(y1*y2*z3*x4,eye(3^6)));
-RHS = (1/2)*(2*kron(eye(2^8),lam_6a8) + kron(x1,lam_1a5) + kron(y1,lam_2a5) + kron(eye(2^8),lam_6a5) - kron(z3,lam_6a5) + kron(xa1,lam_4a5) + kron(ya1,lam_5a5) + kron(xa1,lam_1a6) ...
+RHS = (1/2)*(2*kron(eye(2^8),lam_6a8) + kron(x1,lam_1a5) + kron(y1,lam_2a5) + kron(eye(2^8),lam_6a5) - kron(z3, lam_6a5) + kron(xa1,lam_4a5) + kron(ya1,lam_5a5) + kron(xa1,lam_1a6) ...
     + kron(ya1,lam_2a6) + 2*kron(x4,lam_6a6) + kron(xa2,lam_4a6) + kron(ya2,lam_5a6) + kron(xa2,lam_1a7) + kron(ya2,lam_2a7) + kron(eye(2^8),lam_6a7) - kron(za1,lam_6a7) ...
-    + kron(x2,lam_4a7) + kron(y2,lam_5a7) + kron(x1,lam_1a8) + kron(y1,lam_2a8) + kron(z3,lam_6a8) + kron(xa5,lam_4a9) + kron(ya5,lam_5a9) + kron(eye(2^8),lam_6a9) ...
+    + kron(x2,lam_4a7) + kron(y2,lam_5a7) + kron(x1,lam_1a8) + kron(y1,lam_2a8) + kron(z3,lam_6a8) + kron(xa5,lam_4a9) + kron(ya5,lam_5a9) + kron(eye(2^8),lam_6a9)...
     + kron(xa6,lam_4a9) + kron(ya6,lam_5a9) + kron(xa6,lam_1a10) + kron(ya6,lam_2a10) + kron(eye(2^8),lam_6a10) + kron(z3,lam_6a10) + kron(x2,lam_4a10) + kron(y2,lam_5a10));
 
-abs(eigs(LHS, 1, 'smallestreal')-eigs(RHS, 1, 'smallestreal')) % 7.9568
+[VL, EL] = eig(LHS); [VR, ER] = eig(RHS);
+[DL, indL] = sort(diag(EL)); [DR, indR] = sort(diag(ER));
+VL = VL(:,indL); EL = EL(indL,indL); VR = VR(:,indR); ER = ER(indR,indR);
+VL = VL(:,1:4:end); EL = EL(:,1:4:end); VR = VR(:,1:4:end); ER = ER(:,1:4:end);
+
+for col = 1:1:size(VL,2)
+V_diff(col,1) = sqrt(dot((VL(:,col)-VR(:,col)),(VL(:,col)-VR(:,col))));
+E_diff(col,1) = sqrt(dot((EL(:,col)-ER(:,col)),(EL(:,col)-ER(:,col))));
+end
+
+max(E_diff)
+min(V_diff)
 
