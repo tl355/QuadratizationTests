@@ -2,6 +2,10 @@ test_a = zeros(50000,1); % Test A: maximum error between LHS - RHS
 test_b = zeros(50000,1); % Test B: mean error between LHS - RHS, including only the non-zero elements (please double check this!)
 test_c = zeros(50000,1); % Test C: variance in error between LHS - RHS, including only the non-zero elements (please double check this!)
 
+% Note: This test works for quadratic combinations of x3, y3, and z3, but
+% not linear combinations of them. Attempting linear combinations will
+% cause this program to fail tests.
+
 for k = 1:50000
 n = 3;
    
