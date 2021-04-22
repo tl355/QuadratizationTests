@@ -1,7 +1,7 @@
 function output = testing_new_paulinomials(n)
 % Testing function for new_paulinomials.m
 % This will test the function for random nxn matrices
-% Note: Linear combinations do not pass without all Gell-Mann matrices.
+% Note: Linear combinations do not pass without all Gell-Mann matrices (for any n).
 
 test_a = zeros(1000,1); % Test B: maximum error between LHS - RHS
 test_b = zeros(1000,1); % Test C: mean error between LHS - RHS, including only the non-zero elements (please double check this!)
@@ -31,7 +31,7 @@ while IND(length(factors)) <= factors(length(factors))^2
         temp = kron(temp,gell_mann_matrices{1,ind}{1,IND(ind)});
     end
     
-    temp = coefficients(coefficients_ind)*temp;
+    temp = coefficients(coefficients_ind,1)*temp;
     coefficients_ind = coefficients_ind + 1;
     RHS = RHS + temp;
     
