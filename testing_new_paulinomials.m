@@ -19,7 +19,7 @@ end
 for k = 1:1000
 LHS = -5000*(1 + 1i) + 10000*(rand(n) + 1i*rand(n));
 
-coefficients = new_paulinomials(LHS);
+coefficients = new_paulinomials(LHS,{});
 RHS = zeros(length(LHS));
 
 IND = ones([1 length(factors)]);
